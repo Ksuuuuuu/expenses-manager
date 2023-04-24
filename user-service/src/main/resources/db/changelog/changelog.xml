@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog ">
+    <include file="create-changeset-city-table.xml" relativeToChangelogFile="true"/>
+    <include file="create-changeset-user-table.xml" relativeToChangelogFile="true"/>
+    <include file="changeset-city-user.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>

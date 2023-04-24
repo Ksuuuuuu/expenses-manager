@@ -1,0 +1,5 @@
+<addForeignKeyConstraint baseColumnNames="city_id"
+                         baseTableName="user"
+                         constraintName="fk_city_id"
+                         referencedColumnNames="city_id"
+                         referencedTableName="city"/>
