@@ -15,6 +15,6 @@ public class MvcInitializer implements WebApplicationInitializer {
         DispatcherServlet servlet = new DispatcherServlet(context);
         ServletRegistration.Dynamic registration = servletContext.addServlet("app", servlet);
         registration.setLoadOnStartup(1);
-        registration.addMapping("/");
+        registration.addMapping("/receipts");
     }
 }
