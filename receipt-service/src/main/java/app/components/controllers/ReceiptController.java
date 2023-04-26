@@ -41,10 +41,10 @@ public class ReceiptController {
         return "redirect:/receipts";
     }
 
-    @GetMapping("/new")
-    public String addReceipt(@ModelAttribute("receipt") Receipt receipt){
-        return "receipts/new";
-    }
+//    @GetMapping("/new")
+//    public String addReceipt(@ModelAttribute("receipt") Receipt receipt){
+//        return "receipts/new";
+//    }
 
     @PostMapping("/new")
     public String create(@ModelAttribute("receipt") Receipt receipt){
