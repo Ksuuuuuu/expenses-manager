@@ -1,5 +1,12 @@
-<addForeignKeyConstraint baseColumnNames="city_id"
-                         baseTableName="user"
-                         constraintName="fk_city_id"
-                         referencedColumnNames="city_id"
-                         referencedTableName="city"/>
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <changeSet id="fk-id-city-to-city" author="ksu">
+        <addForeignKeyConstraint baseColumnNames="city_id"
+                                 baseTableName="user"
+                                 constraintName="fk_city_id"
+                                 referencedColumnNames="city_id"
+                                 referencedTableName="city"/>
+    </changeSet>
+</databaseChangeLog>
