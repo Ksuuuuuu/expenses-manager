@@ -2,6 +2,7 @@ package app.components.service;
 
 import app.components.entity.ReceiptContent;
 import app.components.entity.ReceiptEntity;
+import app.components.entity.ReceiptLoad;
 import app.components.repository.AddReceiptRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,11 @@ public class AddReceiptService {
         this.qrReadService = qrReadService;
     }
 
-    public void save(File qr, long idUser, String path) throws FileNotFoundException {
+    public void save(ReceiptLoad receiptLoad) throws FileNotFoundException {
         try {
-            ReceiptContent content = ParseService.parseContent(qrReadService.readQRCode(qr));
-            receiptRepository.create(new ReceiptEntity(content.getDateTime(), content.getAmount(), path, idUser));
+            String path = receiptLoad.getFilePath();
+            ReceiptContent content = ParseService.parseContent(qrReadService.readQRCode(new File(path)));
+            receiptRepository.create(new ReceiptEntity(content.getDateTime(), content.getAmount(), path, receiptLoad.getIdUser()));
         } catch (IOException e) {
             throw new FileNotFoundException();
         }
