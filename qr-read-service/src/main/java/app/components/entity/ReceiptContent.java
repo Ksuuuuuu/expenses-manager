@@ -1,4 +1,4 @@
-package app.components;
+package app.components.entity;
 
 import lombok.Data;
 

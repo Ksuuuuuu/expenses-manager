@@ -1,5 +1,6 @@
-package app.components;
+package app.components.service;
 
+import app.components.entity.ReceiptContent;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

@@ -1,4 +1,4 @@
-package app.components;
+package app.components.service;
 
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.MultiFormatReader;
@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 @Service
-public class ReadService {
+public class QrReadService {
 
     public String readQRCode(File qrCodeFile) throws IOException {
         try {

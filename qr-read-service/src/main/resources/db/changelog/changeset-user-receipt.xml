@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <changeSet id="fk-id-user-to-user" author="ksu">
+        <addForeignKeyConstraint baseColumnNames="receipt_id"
+                                 baseTableName="receipt"
+                                 constraintName="fk_receipt_id"
+                                 referencedColumnNames="receipt_id"
+                                 referencedTableName="receipt"/>
+    </changeSet>
+</databaseChangeLog>
