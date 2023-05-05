@@ -11,4 +11,8 @@ public class City {
         this.id = id;
         this.title = title;
     }
+
+    public City() {
+
+    }
 }
