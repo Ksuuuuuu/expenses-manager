@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public class ReceiptsRepo {
 
-    final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final static String GET_ALL = "SELECT receipt_id, date_time, amount, file_path, user_id FROM receipt WHERE user_id = :user_id";
     private final static String DELETE = "DELETE FROM receipt WHERE receipt_id = :id";
     @Autowired
