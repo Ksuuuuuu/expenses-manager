@@ -27,7 +27,7 @@ public class SpringConfig {
         }
         dataSource.setDriverClassName(properties.getProperty("driver"));
         dataSource.setUrl(properties.getProperty("url"));
-        dataSource.setUsername(properties.getProperty("user"));
+        dataSource.setUsername(properties.getProperty("username"));
         dataSource.setPassword(properties.getProperty("password"));
 
         return dataSource;
