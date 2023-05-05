@@ -3,7 +3,7 @@ package app.configs;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -39,17 +39,17 @@ public class SpringConfig implements WebMvcConfigurer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        dataSource.setDriverClassName(properties.getProperty("driver.name"));
-        dataSource.setUrl(properties.getProperty("db.host"));
-        dataSource.setUsername(properties.getProperty("db.user"));
-        dataSource.setPassword(properties.getProperty("db.password"));
+        dataSource.setDriverClassName(properties.getProperty("driver"));
+        dataSource.setUrl(properties.getProperty("url"));
+        dataSource.setUsername(properties.getProperty("user"));
+        dataSource.setPassword(properties.getProperty("password"));
 
         return dataSource;
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate() {
-        return new JdbcTemplate(dataSource());
+    public NamedParameterJdbcTemplate jdbcTemplate() {
+        return new NamedParameterJdbcTemplate(dataSource());
     }
 
 }
