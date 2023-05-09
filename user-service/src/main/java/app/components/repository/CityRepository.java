@@ -18,7 +18,7 @@ public class CityRepository {
 
     private final static String GET_BY_NAME = "SELECT city_id, city_name FROM city WHERE city_name = :city_name";
     private final static String GET_ALL = "SELECT city_id, city_name FROM city";
-    private final static String INSERT = "INSERT INTO city VALUES(:city_id, :city_name)";
+    private final static String INSERT = "INSERT INTO city VALUES(:city_name)";
     private static final String GET_BY_ID = "SELECT city_id, city_name FROM city WHERE city_id = :city_id";
 
     @Autowired
@@ -41,9 +41,7 @@ public class CityRepository {
     }
 
     public void create(City city){
-        MapSqlParameterSource param = new MapSqlParameterSource();
-        param.addValue("city_id", city.getId());
-        param.addValue("city_name", city.getTitle());
+        MapSqlParameterSource param = new MapSqlParameterSource("city_name", city.getTitle());
         namedParameterJdbcTemplate.update(INSERT, param);
     }
 }
