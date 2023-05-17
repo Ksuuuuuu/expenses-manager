@@ -33,9 +33,9 @@ public class ReceiptsRepo {
                 .toList();
     }
 
-    public void deleteById(long id){
+    public int deleteById(long id){
         SqlParameterSource param = new MapSqlParameterSource("receipt_id", id);
-        namedParameterJdbcTemplate.update(DELETE, param);
+        return namedParameterJdbcTemplate.update(DELETE, param);
     }
 
 
