@@ -1,10 +1,14 @@
 package app.components.controllers;
 
+import app.components.exception.AppError;
+import app.components.exception.NotFoundParameterException;
+import app.components.Status;
 import app.components.entity.Receipt;
 import app.components.service.ReceiptService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -20,25 +24,38 @@ public class ReceiptController {
     }
 
     @GetMapping("/{idUser}")
-    public String getAllReceipts(@PathVariable("idUser") Long idUser, Model model){
-        if (idUser != null){
+    public ResponseEntity<?> getAllReceipts(@PathVariable("idUser") Long idUser){
+        try {
             List<Receipt> receipts = receiptService.getAll(idUser);
-            model.addAttribute("receipts", receipts);
+            return new ResponseEntity<>(receipts, HttpStatus.OK);
+        } catch (NotFoundParameterException e) {
+            return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(), "No idUser parameter " + idUser),
+                    HttpStatus.NOT_FOUND);
         }
-        return "receipts/getAll";
     }
 
     @GetMapping("/{idUser}/{date}")
-    public String getReceiptsByDate(@PathVariable("idUser") Long idUser, @PathVariable("date") LocalDate date, Model model){
-        List<Receipt> receipts =  receiptService.getByDate(idUser, date);
-        model.addAttribute("date", date);
-        model.addAttribute("receiptsByDate", receipts);
-        return "receipts/getByDate";
+    public ResponseEntity<?> getReceiptsByDate(@PathVariable("idUser") Long idUser, @PathVariable("date") LocalDate date){
+        try {
+            List<Receipt> receipts =  receiptService.getByDate(idUser, date);
+            return new ResponseEntity<>(receipts, HttpStatus.OK);
+        } catch (NotFoundParameterException e) {
+            return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(), "No idUser parameter " + idUser + " or date " + date),
+                    HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteReceipt(@PathVariable("id") long id){
-        receiptService.delete(id);
-        return "redirect:/receipts";
+    public ResponseEntity<?> deleteReceipt(@PathVariable("id") long id){
+        try {
+            if (receiptService.delete(id).equals(Status.Success)){
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+            return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(), "No receipt with id: " + id),
+                    HttpStatus.NOT_FOUND);
+        } catch (NotFoundParameterException e) {
+            return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(), "No id parameter " + id),
+                                        HttpStatus.NOT_FOUND);
+        }
     }
 }
