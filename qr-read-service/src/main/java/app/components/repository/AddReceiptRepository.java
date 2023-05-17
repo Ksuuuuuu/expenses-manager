@@ -17,8 +17,8 @@ public class AddReceiptRepository {
         this.jdbcInsert = jdbcInsert;
     }
 
-    public long create(ReceiptEntity receipt){
-        Map<String, Object> parameters = new HashMap<String, Object>();
+    public Long create(ReceiptEntity receipt){
+        Map<String, Object> parameters = new HashMap<>();
         parameters.put("date_time", receipt.getDateTime());
         parameters.put("amount", receipt.getAmount());
         parameters.put("filePath", receipt.getFilePath());
