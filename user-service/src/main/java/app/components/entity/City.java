@@ -15,4 +15,8 @@ public class City {
     public City() {
 
     }
+
+    public City(String title) {
+        this.title = title;
+    }
 }
