@@ -15,5 +15,8 @@ public class ReadController {
     @PostMapping("/{idUser}")
     public void readReceipt(@RequestBody File file, @PathVariable Long idUser){
 
+        //save file to s3
+        //path + idUser -> receipt load
+        //redirect to queue with receipt load
     }
 }
