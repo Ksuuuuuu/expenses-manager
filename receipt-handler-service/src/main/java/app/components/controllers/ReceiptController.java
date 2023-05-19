@@ -18,6 +18,7 @@ import java.util.List;
 @RequestMapping("/receipts")
 public class ReceiptController {
     private final ReceiptService receiptService;
+
     @Autowired
     public ReceiptController(ReceiptService receiptService) {
         this.receiptService = receiptService;

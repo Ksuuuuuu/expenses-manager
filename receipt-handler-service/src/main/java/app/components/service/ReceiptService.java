@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 public class ReceiptService {
+
     private final ReceiptsRepo receiptsRepo;
 
     @Autowired
