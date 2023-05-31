@@ -1,8 +1,10 @@
+/*
 package app.configs;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletRegistration;
 import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
@@ -12,9 +14,13 @@ public class MvcInitializer implements WebApplicationInitializer {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
         context.register(SpringConfig.class);
 
-        DispatcherServlet servlet = new DispatcherServlet(context);
-        ServletRegistration.Dynamic registration = servletContext.addServlet("app", servlet);
-        registration.setLoadOnStartup(1);
-        registration.addMapping("/users");
+        servletContext.addListener(new ContextLoaderListener(context));
+
+        // Register and map the dispatcher servlet
+        ServletRegistration.Dynamic dispatcher =
+                servletContext.addServlet("dispatcher", new DispatcherServlet(context));
+        dispatcher.setLoadOnStartup(1);
+        dispatcher.addMapping("/");
     }
 }
+*/
