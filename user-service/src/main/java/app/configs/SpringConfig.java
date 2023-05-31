@@ -17,14 +17,6 @@ import java.util.Properties;
 @ComponentScan(basePackages = "app.components")
 @EnableWebMvc
 public class SpringConfig implements WebMvcConfigurer {
-//    @Bean
-//    public ViewResolver jspViewResolver() {
-//        InternalResourceViewResolver bean = new InternalResourceViewResolver();
-//        bean.setViewClass(JstlView.class);
-//        bean.setPrefix("/WEB-INF/pages/");
-//        bean.setSuffix(".jsp");
-//        return bean;
-//    }
 
     @Bean
     public DataSource dataSource() {
