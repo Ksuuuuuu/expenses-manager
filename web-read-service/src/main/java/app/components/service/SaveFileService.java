@@ -1,10 +1,13 @@
 package app.components.service;
+import org.springframework.stereotype.Service;
+
 import java.io.*;
 import java.time.LocalDateTime;
 
+@Service
 public class SaveFileService {
 
-    private final String DIRECTORY_TO_SAVE = "C:\\Java projects\\expenses-manager\\files_directory\\";
+    private final static String DIRECTORY_TO_SAVE = "C:\\Java projects\\expenses-manager\\files_directory\\";
 
     public String saveFileToDir(File fileToSave) throws FileNotFoundException {
         String path = DIRECTORY_TO_SAVE + LocalDateTime.now() + fileToSave.getName();

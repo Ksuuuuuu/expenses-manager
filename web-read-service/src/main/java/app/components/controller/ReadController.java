@@ -6,16 +6,16 @@ import app.components.service.SaveFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 
-@Controller
+@RestController
 @RequestMapping("/receipts/add")
 public class ReadController {
 
@@ -33,7 +33,7 @@ public class ReadController {
             //path + idUser -> receipt load
             String path = saveFileService.saveFileToDir(file);
             ReceiptLoad receiptLoad = new ReceiptLoad(path, idUser);
-            //redirect to queue with receipt load
+            //write to queue with receipt load
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (FileNotFoundException e) {
             return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(), "File doesn't found"), HttpStatus.NOT_FOUND);
