@@ -1,5 +1,6 @@
 package app;
 
+import app.configs.RabbitConfig;
 import app.configs.SpringConfig;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.connector.Connector;
@@ -19,7 +20,7 @@ public class QrReadServiceLauncher {
         // Create a Spring application context
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
         appContext.register(SpringConfig.class);
-
+        appContext.register(RabbitConfig.class);
         // Create a DispatcherServlet and register it with Tomcat
 //        DispatcherServlet dispatcherServlet = new DispatcherServlet(appContext);
 //

@@ -11,4 +11,6 @@ public class ReceiptLoad {
         this.idUser = idUser;
         this.filePath = filePath;
     }
+
+
 }
