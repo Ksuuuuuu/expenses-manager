@@ -9,18 +9,21 @@ import app.components.exception.IncorrectDataException;
 import app.components.repository.CityRepository;
 import app.components.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserRepository userRepository;
     private final CityRepository cityRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, CityRepository cityRepository) {
+    public UserService(UserRepository userRepository, CityRepository cityRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.cityRepository = cityRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public Long registry(RegistryUser user) {
@@ -31,12 +34,13 @@ public class UserService {
         } else {
             idCity = city.getId();
         }
-        return userRepository.create(new User(user.getLogin(), user.getPassword(), user.getName(), idCity));
+        return userRepository.create(new User(user.getLogin(),
+                bCryptPasswordEncoder.encode(user.getPassword()), user.getName(), idCity));
     }
 
     public Long login(LoginUser loginUser) throws IncorrectDataException {
         User user = userRepository.findUserByLogin(loginUser.getLogin()).orElse(null);
-        if (user == null || !user.getPassword().equals(loginUser.getPassword())) {
+        if (user == null || !bCryptPasswordEncoder.matches(loginUser.getPassword(), user.getPassword())) {
             throw new IncorrectDataException("incorrect data");
         }
         return user.getId();
