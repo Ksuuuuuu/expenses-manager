@@ -10,28 +10,35 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public class UserRepository {
 
     private final JdbcTemplate jdbcTemplate;
-    private final static String GET_BY_LOGIN = "SELECT user_id, login, password, name, city_id FROM \"user\" WHERE login = ?";
-    private final static String INSERT = "INSERT INTO \"user\" VALUES(?, ?, ?, ?)";
-    private static final String GET_BY_ID = "SELECT user_id, login, password, name, city_id FROM \"user\" WHERE user_id = ?";
-    private final static String DELETE_BY_ID = "DELETE FROM \"user\" WHERE login = ?";
-    private final static String UPDATE = "UPDATE \"user\" SET login = ?, password = ?, name = ?, city_id = ?  WHERE user_id = ?";
+    private final static String GET_BY_LOGIN = "SELECT user_id, login, encoded_password, name, city_id FROM \"user\" WHERE login = ?";
+    private final static String INSERT = "INSERT INTO \"user\"(login, encoded_password, name, city_id) VALUES(?, ?, ?, ?)";
+    private static final String GET_BY_ID = "SELECT user_id, login, encoded_password, name, city_id FROM \"user\" WHERE user_id = ?";
+    private final static String DELETE_BY_ID = "DELETE FROM \"user\" WHERE user_id = ?";
+    private final static String UPDATE = "UPDATE \"user\" SET name = ?, city_id = ?  WHERE user_id = ?";
     @Autowired
     public UserRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     public Optional<User> findUserByLogin(String login) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject(GET_BY_LOGIN, new Object[]{login}, new UserRowMapper()));
+        List<User> userList = jdbcTemplate.query(GET_BY_LOGIN, new Object[]{login}, new UserRowMapper());
+        if (userList.isEmpty())
+            return Optional.empty();
+        return Optional.ofNullable(userList.get(0));
     }
 
     public Optional<User> findUserById(long id) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject(GET_BY_ID, new Object[]{id}, new UserRowMapper()));
+        List<User> userList = jdbcTemplate.query(GET_BY_ID, new Object[]{id}, new UserRowMapper());
+        if (userList.isEmpty())
+            return Optional.empty();
+        return Optional.of(userList.get(0));
     }
 
     public Long create(User user) {
@@ -45,7 +52,7 @@ public class UserRepository {
             return pst;
         }, keyHolder);
 
-        return keyHolder.getKey() == null ? null : keyHolder.getKey().longValue();
+        return keyHolder.getKeys() == null ? null : (long)keyHolder.getKeys().get("user_id");
     }
 
     public int deleteById(long id) {
@@ -53,6 +60,6 @@ public class UserRepository {
     }
 
     public int update(User user) {
-        return jdbcTemplate.update(UPDATE, user.getId(), user.getLogin(), user.getPassword(), user.getName(), user.getIdCity());
+        return jdbcTemplate.update(UPDATE,  user.getName(), user.getIdCity(), user.getId());
     }
 }

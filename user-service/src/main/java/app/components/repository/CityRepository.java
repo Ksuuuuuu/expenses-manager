@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -20,7 +21,7 @@ public class CityRepository {
 
     private final static String GET_BY_NAME = "SELECT city_id, city_name FROM city WHERE city_name = ?";
     private final static String GET_ALL = "SELECT city_id, city_name FROM city";
-    private final static String INSERT = "INSERT INTO city VALUES(?)";
+    private final static String INSERT = "INSERT INTO city(city_name) VALUES(?)";
     private static final String GET_BY_ID = "SELECT city_id, city_name FROM city WHERE city_id = ?";
 
     @Autowired
@@ -33,11 +34,17 @@ public class CityRepository {
     }
 
     public Optional<City> findCityByName(String name){
-        return Optional.ofNullable(jdbcTemplate.queryForObject(GET_BY_NAME, new Object[]{name}, new CityRowMapper()));
+        List<City> listCity = jdbcTemplate.query(GET_BY_NAME, new Object[]{name}, new CityRowMapper());
+        if (listCity.isEmpty())
+            return Optional.empty();
+        return Optional.of(listCity.get(0));
     }
 
     public Optional<City> findCityById(long id){
-        return Optional.ofNullable(jdbcTemplate.queryForObject(GET_BY_ID, new Object[]{id}, new CityRowMapper()));
+        List<City> listCity = jdbcTemplate.query(GET_BY_ID, new Object[]{id}, new CityRowMapper());
+        if (listCity.isEmpty())
+            return Optional.empty();
+        return Optional.of(listCity.get(0));
     }
 
     public Long create(City city){
@@ -48,6 +55,6 @@ public class CityRepository {
             return pst;
         }, keyHolder);
 
-        return keyHolder.getKey() == null ? null : keyHolder.getKey().longValue();
+        return keyHolder.getKeys() == null ? null : (long) Objects.requireNonNull(keyHolder.getKeys()).get("city_id");
     }
 }
