@@ -12,7 +12,7 @@ public class QrReadServiceLauncher {
     public static void main(String[] args) throws LifecycleException {
         Tomcat tomcat = new Tomcat();
         final Connector connector = new Connector();
-        connector.setPort(8082);
+        connector.setPort(8081);
         connector.setScheme("http");
         connector.setSecure(false);
         tomcat.setConnector(connector);

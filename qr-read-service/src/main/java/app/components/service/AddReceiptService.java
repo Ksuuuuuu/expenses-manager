@@ -5,6 +5,8 @@ import app.components.entity.ReceiptContent;
 import app.components.entity.ReceiptEntity;
 import app.components.entity.ReceiptLoad;
 import app.components.repository.AddReceiptRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import java.io.IOException;
 
 @Service
 public class AddReceiptService {
+
     private final AddReceiptRepository receiptRepository;
     private final QrReadService qrReadService;
     private final ParseService parseService;
