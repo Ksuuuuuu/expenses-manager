@@ -14,7 +14,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = "app.components")
+@ComponentScan(basePackages = "app")
 @EnableWebMvc
 public class SpringConfig implements WebMvcConfigurer {
 

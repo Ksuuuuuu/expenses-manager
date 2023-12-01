@@ -34,6 +34,7 @@ public class UserController {
         }
     }
 
+
     @PostMapping("/registry")
     public ResponseEntity<?> registryUser(@RequestBody String user){
 

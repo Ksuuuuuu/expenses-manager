@@ -36,7 +36,7 @@ public class SpringConfig {
     }
 
     @Bean
-    public SimpleJdbcInsert jdbcTemplate() {
+    public SimpleJdbcInsert jdbcInsertTemplate() {
         return new SimpleJdbcInsert(dataSource())
                 .withTableName("receipt")
                 .usingGeneratedKeyColumns("receipt_id");

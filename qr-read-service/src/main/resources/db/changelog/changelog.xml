@@ -2,6 +2,6 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
-    <include file="create-changeset-receipt-table.xml" relativeToChangelogFile="true"/>
-    <include file="changeset-user-receipt.xml" relativeToChangelogFile="true"/>
+<!--    <include file="create-changeset-receipt-table.xml" relativeToChangelogFile="true"/>-->
+<!--    <include file="changeset-user-receipt.xml" relativeToChangelogFile="true"/>-->
 </databaseChangeLog>

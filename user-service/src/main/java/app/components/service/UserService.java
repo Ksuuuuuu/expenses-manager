@@ -9,18 +9,18 @@ import app.components.exception.IncorrectDataException;
 import app.components.repository.CityRepository;
 import app.components.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder bCryptPasswordEncoder;
     private final UserRepository userRepository;
     private final CityRepository cityRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, CityRepository cityRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserService(UserRepository userRepository, CityRepository cityRepository, PasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.cityRepository = cityRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;

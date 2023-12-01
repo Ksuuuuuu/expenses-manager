@@ -16,7 +16,9 @@ public class RabbitConfig {
 
     @Bean
     public ConnectionFactory connectionFactory() {
-        return new CachingConnectionFactory("localhost");
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");
+        //connectionFactory.setPort(15677);
+        return connectionFactory;
     }
 
     @Bean
@@ -33,4 +35,6 @@ public class RabbitConfig {
     public Queue myQueue() {
         return new Queue("message-queue");
     }
+
+
 }
