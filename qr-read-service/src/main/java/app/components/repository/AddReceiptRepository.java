@@ -5,6 +5,7 @@ import app.components.exception.RecordAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.HashMap;
@@ -20,6 +21,7 @@ public class AddReceiptRepository {
         this.jdbcInsert = jdbcInsert;
     }
 
+    @Transactional
     public Long create(ReceiptEntity receipt) throws RecordAlreadyExistException {
         long checksum = receipt.getChecksum();
         if (!isUniqueRecord(checksum)){
