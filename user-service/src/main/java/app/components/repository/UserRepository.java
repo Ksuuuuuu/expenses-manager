@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -41,6 +42,7 @@ public class UserRepository {
         return Optional.of(userList.get(0));
     }
 
+    @Transactional
     public Long create(User user) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
@@ -55,10 +57,12 @@ public class UserRepository {
         return keyHolder.getKeys() == null ? null : (long)keyHolder.getKeys().get("user_id");
     }
 
+    @Transactional
     public int deleteById(long id) {
         return jdbcTemplate.update(DELETE_BY_ID, id);
     }
 
+    @Transactional
     public int update(User user) {
         return jdbcTemplate.update(UPDATE,  user.getName(), user.getIdCity(), user.getId());
     }
