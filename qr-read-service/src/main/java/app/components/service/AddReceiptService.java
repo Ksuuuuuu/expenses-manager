@@ -4,9 +4,8 @@ import app.components.Status;
 import app.components.entity.ReceiptContent;
 import app.components.entity.ReceiptEntity;
 import app.components.entity.ReceiptLoad;
+import app.components.exception.RecordAlreadyExistException;
 import app.components.repository.AddReceiptRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +27,13 @@ public class AddReceiptService {
         this.parseService = parseService;
     }
 
-    public Status save(ReceiptLoad receiptLoad) throws FileNotFoundException {
+    public Status save(ReceiptLoad receiptLoad) throws FileNotFoundException, RecordAlreadyExistException {
         try {
             String path = receiptLoad.getFilePath();
+            System.out.println("Path in save " + path);
             ReceiptContent content = parseService.parseContent(qrReadService.readQRCode(new File(path)));
             Long id = receiptRepository.create(new ReceiptEntity(content.getDateTime(),
-                    content.getAmount(), path, receiptLoad.getIdUser()));
+                    content.getAmount(), path, receiptLoad.getIdUser(), content.getChecksum()));
             if (id != null){
                 return Status.Success;
             }

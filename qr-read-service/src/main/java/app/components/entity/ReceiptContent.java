@@ -8,9 +8,11 @@ import java.math.BigDecimal;
 public class ReceiptContent {
     private String dateTime;
     private BigDecimal amount;
+    private long checksum;
 
-    public ReceiptContent(String dateTime, BigDecimal amount) {
+    public ReceiptContent(String dateTime, BigDecimal amount, long checksum) {
         this.dateTime = dateTime;
         this.amount = amount;
+        this.checksum = checksum;
     }
 }

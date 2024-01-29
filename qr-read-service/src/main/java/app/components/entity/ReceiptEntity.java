@@ -11,22 +11,19 @@ public class ReceiptEntity {
     private BigDecimal amount;
     private String filePath;
     private long idUser;
+    private long checksum;
 
     public ReceiptEntity() {
     }
 
-    public ReceiptEntity(long id, String dateTime, BigDecimal amount, String filePath, long idUser) {
-        this.id = id;
-        this.dateTime = dateTime;
-        this.amount = amount;
-        this.filePath = filePath;
-        this.idUser = idUser;
-    }
 
-    public ReceiptEntity(String dateTime, BigDecimal amount, String filePath, long idUser) {
+
+    public ReceiptEntity(String dateTime, BigDecimal amount, String filePath, long idUser, long checksum) {
         this.dateTime = dateTime;
         this.amount = amount;
         this.filePath = filePath;
         this.idUser = idUser;
+        this.checksum = checksum;
+
     }
 }
