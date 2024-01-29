@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -34,6 +35,7 @@ public class ReceiptsRepo {
                 .toList();
     }
 
+    @Transactional
     public int deleteById(long id){
         SqlParameterSource param = new MapSqlParameterSource("receipt_id", id);
         return namedParameterJdbcTemplate.update(DELETE, param);
