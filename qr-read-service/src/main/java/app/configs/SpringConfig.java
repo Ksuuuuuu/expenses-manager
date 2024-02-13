@@ -36,9 +36,18 @@ public class SpringConfig {
     }
 
     @Bean
-    public SimpleJdbcInsert jdbcInsertTemplate() {
+    public SimpleJdbcInsert jdbcInsertTemplateToReceipt() {
         return new SimpleJdbcInsert(dataSource())
                 .withTableName("receipt")
                 .usingGeneratedKeyColumns("receipt_id");
     }
+
+    @Bean
+    public SimpleJdbcInsert jdbcInsertTemplateToReceiptOutbox() {
+        return new SimpleJdbcInsert(dataSource())
+                .withTableName("receipt_outbox")
+                .usingGeneratedKeyColumns("id");
+    }
+
+
 }
