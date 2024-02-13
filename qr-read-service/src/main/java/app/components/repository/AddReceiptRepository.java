@@ -3,6 +3,7 @@ package app.components.repository;
 import app.components.entity.ReceiptEntity;
 import app.components.exception.RecordAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ public class AddReceiptRepository {
     private final static String GET_COUNT_BY_CHECKSUM = "SELECT EXISTS(SELECT count(*) FROM \"receipt\" WHERE checksum = ?)";
 
     @Autowired
-    public AddReceiptRepository(SimpleJdbcInsert jdbcInsert) {
+    public AddReceiptRepository(@Qualifier("jdbcInsertTemplateToReceipt") SimpleJdbcInsert jdbcInsert) {
         this.jdbcInsert = jdbcInsert;
     }
 
