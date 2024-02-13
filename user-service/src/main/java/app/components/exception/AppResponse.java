@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class AppResponse {
-    private Long data;
+    private Object data;
     private int statusCode;
     private String message;
 
@@ -13,7 +13,7 @@ public class AppResponse {
         this.message = message;
     }
 
-    public AppResponse(Long data, int statusCode, String message) {
+    public AppResponse(Object data, int statusCode, String message) {
         this.data = data;
         this.statusCode = statusCode;
         this.message = message;
