@@ -9,6 +9,7 @@ public class User {
     private String password;
     private String name;
     private long idCity;
+    private String email;
 
     public User(long id, String login, String password, String name, long idCity) {
         this.id = id;
