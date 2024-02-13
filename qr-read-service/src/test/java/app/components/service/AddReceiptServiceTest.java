@@ -4,6 +4,7 @@ import app.components.Status;
 import app.components.entity.ReceiptContent;
 import app.components.entity.ReceiptEntity;
 import app.components.entity.ReceiptLoad;
+import app.components.exception.RecordAlreadyExistException;
 import app.components.repository.AddReceiptRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +25,8 @@ public class AddReceiptServiceTest {
     public static final String DATE_TIME_TEST = "123";
     public static final BigDecimal AMOUNT = BigDecimal.TEN;
     public static final String CONTENT_TEST = "content";
+
+    public static final long CHECKSUM = -1;
     @Mock
     private AddReceiptRepository receiptRepository;
     @Mock
@@ -34,17 +37,17 @@ public class AddReceiptServiceTest {
     private AddReceiptService addReceiptService;
 
     @Test
-    public void addReceiptSuccess() throws IOException {
+    public void addReceiptSuccess() throws IOException, RecordAlreadyExistException {
         String content = CONTENT_TEST;
         File file = new File(FILE_NAME_TEST);
-        ReceiptContent receiptContent = new ReceiptContent(DATE_TIME_TEST, AMOUNT);
+        ReceiptContent receiptContent = new ReceiptContent(DATE_TIME_TEST, AMOUNT, CHECKSUM);
 
         given(qrReadService.readQRCode(file))
                 .willReturn(content);
         given(parseService.parseContent(content))
                 .willReturn(receiptContent);
         given(receiptRepository
-                .create(new ReceiptEntity(DATE_TIME_TEST, AMOUNT, FILE_NAME_TEST, 1L)))
+                .create(new ReceiptEntity(DATE_TIME_TEST, AMOUNT, FILE_NAME_TEST, 1L, CHECKSUM)))
                 .willReturn(1L);
 
         Status status = addReceiptService
@@ -54,17 +57,17 @@ public class AddReceiptServiceTest {
     }
 
     @Test
-    public void addReceiptFail() throws IOException {
+    public void addReceiptFail() throws IOException, RecordAlreadyExistException {
         String content = CONTENT_TEST;
         File file = new File(FILE_NAME_TEST);
-        ReceiptContent receiptContent = new ReceiptContent(DATE_TIME_TEST, AMOUNT);
+        ReceiptContent receiptContent = new ReceiptContent(DATE_TIME_TEST, AMOUNT, CHECKSUM);
 
         given(qrReadService.readQRCode(file))
                 .willReturn(content);
         given(parseService.parseContent(content))
                 .willReturn(receiptContent);
         given(receiptRepository
-                .create(new ReceiptEntity(DATE_TIME_TEST, AMOUNT, FILE_NAME_TEST, 1L)))
+                .create(new ReceiptEntity(DATE_TIME_TEST, AMOUNT, FILE_NAME_TEST, 1L, CHECKSUM)))
                 .willReturn(null);
 
         Status status = addReceiptService
