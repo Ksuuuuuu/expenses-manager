@@ -1,17 +1,17 @@
 package app.configs;
 
+import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.core.Queue;
 
 @EnableRabbit
 @Configuration
@@ -33,8 +33,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue qrQueue() {
-        return new Queue("qr-queue");
+    public Queue receiptQueue() {
+        return new Queue("receipt-queue");
     }
 
     @Bean
@@ -42,7 +42,8 @@ public class RabbitConfig {
         return new DirectExchange("direct-exchange");
     }
     @Bean
-    Binding qrBinding(Queue qrQueue, DirectExchange exchange) {
-        return BindingBuilder.bind(qrQueue).to(exchange).with("qr");
+    Binding receiptBinding(Queue receiptQueue, DirectExchange exchange) {
+        return BindingBuilder.bind(receiptQueue).to(exchange).with("receipt");
     }
+
 }

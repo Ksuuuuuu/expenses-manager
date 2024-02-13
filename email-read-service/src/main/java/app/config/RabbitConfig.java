@@ -1,6 +1,9 @@
 package app.config;
 
 import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -30,7 +33,24 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Queue myQueue() {
-        return new Queue("message-queue");
+    public Queue emailQueue() {
+        return new Queue("email-queue");
+    }
+    @Bean
+    public Queue qrQueue() {
+        return new Queue("qr-queue");
+    }
+
+    @Bean
+    DirectExchange exchange() {
+        return new DirectExchange("direct-exchange");
+    }
+    @Bean
+    Binding emailBinding(Queue emailQueue, DirectExchange exchange) {
+        return BindingBuilder.bind(emailQueue).to(exchange).with("email");
+    }
+    @Bean
+    Binding qrBinding(Queue qrQueue, DirectExchange exchange) {
+        return BindingBuilder.bind(qrQueue).to(exchange).with("qr");
     }
 }

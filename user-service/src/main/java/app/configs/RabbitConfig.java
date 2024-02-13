@@ -1,17 +1,17 @@
 package app.configs;
 
+import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.core.Queue;
 
 @EnableRabbit
 @Configuration
@@ -33,6 +33,10 @@ public class RabbitConfig {
     }
 
     @Bean
+    public Queue emailQueue() {
+        return new Queue("email-queue");
+    }
+    @Bean
     public Queue qrQueue() {
         return new Queue("qr-queue");
     }
@@ -40,6 +44,10 @@ public class RabbitConfig {
     @Bean
     DirectExchange exchange() {
         return new DirectExchange("direct-exchange");
+    }
+    @Bean
+    Binding emailBinding(Queue emailQueue, DirectExchange exchange) {
+        return BindingBuilder.bind(emailQueue).to(exchange).with("email");
     }
     @Bean
     Binding qrBinding(Queue qrQueue, DirectExchange exchange) {
