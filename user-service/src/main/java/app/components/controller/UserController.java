@@ -71,4 +71,15 @@ public class UserController {
         return new ResponseEntity<>(new AppResponse(HttpStatus.OK.value(), "delete success"), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")//
+    public ResponseEntity<?> findUser(@PathVariable Long id){
+        if (id == null){
+            return new ResponseEntity<>(new AppResponse(HttpStatus.BAD_REQUEST.value(), "no parameter id"),
+                    HttpStatus.BAD_REQUEST);
+        }
+        User user = userService.get(id);
+        //String email = "redirect"
+        return new ResponseEntity<>(new AppResponse(user, HttpStatus.OK.value(), "find success"), HttpStatus.OK);
+    }
+
 }
