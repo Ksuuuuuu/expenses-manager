@@ -6,6 +6,7 @@ import app.components.entity.ReceiptEntity;
 import app.components.entity.ReceiptLoad;
 import app.components.exception.RecordAlreadyExistException;
 import app.components.repository.AddReceiptRepository;
+import app.components.repository.ReceiptOutboxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +18,14 @@ import java.io.IOException;
 public class AddReceiptService {
 
     private final AddReceiptRepository receiptRepository;
+    private final ReceiptOutboxRepository receiptOutboxRepository;
     private final QrReadService qrReadService;
     private final ParseService parseService;
 
     @Autowired
-    public AddReceiptService(AddReceiptRepository receiptRepository, QrReadService qrReadService, ParseService parseService) {
+    public AddReceiptService(AddReceiptRepository receiptRepository, ReceiptOutboxRepository receiptOutboxRepository, QrReadService qrReadService, ParseService parseService) {
         this.receiptRepository = receiptRepository;
+        this.receiptOutboxRepository = receiptOutboxRepository;
         this.qrReadService = qrReadService;
         this.parseService = parseService;
     }
@@ -35,7 +38,9 @@ public class AddReceiptService {
             Long id = receiptRepository.create(new ReceiptEntity(content.getDateTime(),
                     content.getAmount(), path, receiptLoad.getIdUser(), content.getChecksum()));
             if (id != null){
+                receiptOutboxRepository.create(id);
                 return Status.Success;
+
             }
             else{
                 return Status.ServerError;
